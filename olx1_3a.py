@@ -34,7 +34,7 @@ def findFirstFromOlx(url):
     r = requests.get(url)
     stringus = r.text
 
-    OfferStart = stringus.rfind("/oferta", stringus.find("adCard-featured"), stringus.find("Dzisiaj"))
+    OfferStart = stringus.find("/oferta", stringus.rfind("adCard-featured")))
     if stringus[OfferStart-1]=="d":
         offerLink = "olx.pl"
     else:
