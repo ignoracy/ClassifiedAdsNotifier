@@ -15,7 +15,6 @@ f.close()
 bot = telegram.Bot(token=bottoken)
 
 
-# url = "https://www.olx.pl/d/motoryzacja/samochody/poznan/q-bmw-e36/?search%5Bdistrict_id%5D=719&search%5Bdist%5D=100&search%5Bfilter_float_price:to%5D=15000&search%5Bfilter_float_year:to%5D=2000"
 
 
 def pullFromOlx(url):
