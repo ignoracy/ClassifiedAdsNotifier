@@ -8,7 +8,7 @@ with open('BotToken.txt', 'r') as bottokenfile:
 with open('ChatID.txt', 'r') as chatidfile:
     chatid = chatidfile.read().strip()
 
-f = open('wsparcie2.json', 'r+')
+f = open('data.json', 'r+')
 data = json.load(f)
 f.close()
 
@@ -51,7 +51,6 @@ def findFirstFromOlx(url):
     else:
         OfferStart = stringus.find("/oferta", )
 
-    # OfferStart = stringus.find("/oferta", stringus.rfind("adCard-featured"))
     if stringus[OfferStart - 1] == "d":
         offerLink = "olx.pl"
     else:
@@ -68,12 +67,7 @@ def findFirstFromOtomoto(url):
     r = requests.get(url)
     stringus = r.text
     OfferStart = stringus.find("/oferta/",stringus.find("data-highlight=false"))
-    # if stringus.rfind("adCard-featured") != -1:
-    #     OfferStart = stringus.find("/oferta", stringus.rfind("adCard-featured"))
-    # else:
-    #     OfferStart = stringus.find("/oferta", )
 
-    # OfferStart = stringus.find("/oferta", stringus.rfind("adCard-featured"))
 
     offerLink = "otomoto.pl"
 
@@ -107,21 +101,21 @@ def zacznijolxowac():
     bot.send_message(chat_id=chatid, text='olx')
     while (1 == 1):
 
-        for i in range(0, len(data['rzeczy'])):
+        for i in range(0, len(data['data'])):
 
-            print(data['rzeczy'][i]['nazwa'])
+            print(data['data'][i]['name'])
             try:
-                x = decidepull(data['rzeczy'][i]['link'])
+                x = decidepull(data['data'][i]['link'])
                 print(x)
-                first = decidefirst(data['rzeczy'][i]['link'])
-                if int(x) != int(data['rzeczy'][i]['liczba']):
-                    if int(x) > int(data['rzeczy'][i]['liczba']):
-                        bot.send_message(chat_id=chatid, text=(str(data['rzeczy'][i]['nazwa']) + " " + str(x)))
-                        # update.message.reply_text((str(data['rzeczy'][i]['link'])))
+                first = decidefirst(data['data'][i]['link'])
+                if int(x) != int(data['data'][i]['number']):
+                    if int(x) > int(data['data'][i]['number']):
+                        bot.send_message(chat_id=chatid, text=(str(data['data'][i]['name']) + " " + str(x)))
+                        # update.message.reply_text((str(data['data'][i]['link'])))
                         bot.send_message(chat_id=chatid, text=first)
-                    data['rzeczy'][i]['liczba'] = x
+                    data['data'][i]['number'] = x
                     w = json.dumps(data)
-                    with open("wsparcie2.json", 'w') as f:
+                    with open("data.json", 'w') as f:
                         f.write(w)
             except Exception as e:
                 print(e)
@@ -133,25 +127,7 @@ def zacznijolxowac():
 
 
 
-# url = "https://stackoverflow.com/questions/24297257/save-html-of-some-website-in-a-txt-file-with-python"
-# url = "https://www.olx.pl/d/motoryzacja/samochody/poznan/q-bmw-e36/?search%5Bdistrict_id%5D=719&search%5Bdist%5D=100&search%5Bfilter_float_price:to%5D=15000&search%5Bfilter_float_year:to%5D=2000"
-# url = "https://www.olx.pl/d/motoryzacja/samochody/q-bmw-e60/"
 
-# with open('file.txt', 'w+', encoding="utf=8") as file:
-# file.write(r.text)
-
-# print(len(stringus))
-# print(indexOfFound)
-'''
-for item in data['rzeczy']:
-    print(item['nazwa'])
-    print(pullFromOlx(item['link']))
-    if int(pullFromOlx(item['link'])) != int(item['liczba']):
-        bot.send_message(chatid = text= (str(item['nazwa'])+" "+str(item['liczba'])))
-        item['liczba'] = str(pullFromOlx(item['link']))
-
-'''
 zacznijolxowac()
-# print(int((stringus[indexOfFound + 11] + stringus[indexOfFound + 12] + stringus[indexOfFound + 13] + stringus[indexOfFound + 14] + stringus[indexOfFound + 15])))
 
 f.close()
